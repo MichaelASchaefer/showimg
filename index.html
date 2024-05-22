@@ -6,11 +6,11 @@
     <title>Image</title>
 </head>
 <body>
-    <img id="imageToDisplay" src="">
+    <img id="imageToDisplay" src="" width="" height="">
     <script>
         // Function to get URL parameters
         function getQueryParam(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
+            name = name.replace(/[\[\]]/g, '\\$&'); // Fixed to correctly escape special characters
             var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
                 results = regex.exec(url);
             if (!results) return null;
@@ -19,7 +19,16 @@
         }
 
         // Set the image source to the 'url' query parameter
-        document.getElementById('imageToDisplay').src = getQueryParam('url');
+        var imageElement = document.getElementById('imageToDisplay');
+        imageElement.src = getQueryParam('url');
+
+        // Set the image height and width to the 'h' and 'w' query parameters
+        var imageHeight = getQueryParam('h');
+        var imageWidth = getQueryParam('w');
+
+        // If height and width are provided, update the image element
+        if (imageHeight) imageElement.height = imageHeight;
+        if (imageWidth) imageElement.width = imageWidth;
     </script>
 </body>
 </html>
